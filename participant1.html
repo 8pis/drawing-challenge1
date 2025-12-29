@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشارك 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f7f7f7;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>ابدأ الرسم الآن، المشارك 1</h1>
+    <canvas id="drawingCanvas" width="600" height="400"></canvas>
+    <br>
+    <button onclick="startDrawing()">ابدأ الرسم</button>
+    <script>
+        var canvas = document.getElementById('drawingCanvas');
+        var context = canvas.getContext('2d');
+        var isDrawing = false;
+
+        function startDrawing() {
+            isDrawing = true;
+            context.beginPath();
+        }
+
+        canvas.addEventListener('mousedown', function(e) {
+            isDrawing = true;
+            context.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+            if (isDrawing) {
+                context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                context.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', function() {
+            isDrawing = false;
+        });
+
+        canvas.addEventListener('mouseout', function() {
+            isDrawing = false;
+        });
+    </script>
+</body>
+</html>
