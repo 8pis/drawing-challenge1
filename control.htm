@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة الكونترول</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        canvas {
+            border: 2px solid #000;
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>صفحة الكونترول</h1>
+    <div>
+        <h2>المشارك 1</h2>
+        <canvas id="canvas1" width="600" height="400"></canvas>
+    </div>
+    <div>
+        <h2>المشارك 2</h2>
+        <canvas id="canvas2" width="600" height="400"></canvas>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');  // الاتصال بالخادم
+        const canvas1 = document.getElementById('canvas1');
+        const canvas2 = document.getElementById('canvas2');
+        const ctx1 = canvas1.getContext('2d');
+        const ctx2 = canvas2.getContext('2d');
+
+        // عند الاتصال بالخادم
+        socket.onopen = function() {
+            console.log('WebSocket connection established!');
+        };
+
+        // عند تلقي الرسائل من الخادم (إحداثيات الرسم)
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+
+            // تحديد المشارك بناءً على x و y من البيانات المرسلة
+            if (data.m == 1) {
+                // الرسم على canvas1 (المشارك 1)
+                ctx1.lineTo(data.x, data.y);
+                ctx1.stroke();
+            } else if (data.m == 2) {
+                // الرسم على canvas2 (المشارك 2)
+                ctx2.lineTo(data.x, data.y);
+                ctx2.stroke();
+            }
+        };
+    </script>
+</body>
+</html>
