@@ -31,11 +31,18 @@
 <body>
     <h1>أهلاً بك في تحدي الرسم!</h1>
     <p>اضغط على الزر لبدء التحدي.</p>
-    <a href="participant1.html">
-        <button class="button">ابدأ تحدي الرسم للمشارك 1</button>
-    </a>
-    <a href="participant2.html">
-        <button class="button">ابدأ تحدي الرسم للمشارك 2</button>
-    </a>
+    <button class="button" id="startButton">ابدأ التحدي</button>
+
+    <div id="links" style="display:none;">
+        <p>رابط المشارك 1: <a href="participant1.html" target="_blank">اضغط هنا</a></p>
+        <p>رابط المشارك 2: <a href="participant2.html" target="_blank">اضغط هنا</a></p>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('links').style.display = 'block';
+            document.getElementById('startButton').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
